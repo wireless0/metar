@@ -11,11 +11,12 @@ def get_metar(airfield):
     file.close()
     data = xmltodict.parse(data)
 
-#    return data
-    if data['response']['data']['@num_results'] != '0':
-        return data['response']['data']['METAR'][0]['raw_text']
-    else:
+    if data['response']['data']['@num_results'] == '1':
+        return data['response']['data']['METAR']['raw_text']
+    elif data['response']['data']['@num_results'] == '0':
         return 'No data for {}'.format(airfield)
+    else:
+        return data['response']['data']['METAR'][0]['raw_text']
 
 @route('/')
 @route('/<name>')
