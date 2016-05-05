@@ -1,6 +1,7 @@
 from bottle import route, run
 import urllib2
 import xmltodict
+import socket
 
 def get_metar(airfield):
     if not airfield.isalpha():
@@ -18,8 +19,8 @@ def get_metar(airfield):
 
 @route('/')
 @route('/<name>')
-def metar(name = 'AAAA'):
+def metar(name = 'OEDF'):
     return get_metar(name)
 
-run(host='', port=80, debug=True)
+run(host=socket.gethostname(), port=80, debug=True)
 
